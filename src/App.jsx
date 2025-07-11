@@ -1,5 +1,11 @@
-function App() {
-  return <h1>Hello World</h1>
+import { Outlet } from "react-router-dom";
+
+function Main() {
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 }
 
-export default App
+export default Main;
