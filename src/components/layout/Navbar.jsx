@@ -35,7 +35,7 @@ function Navbar() {
   }, [isDropdownOpen]);
 
   return (
-    <nav className="bg-gray-800 text-white p-4 shadow-md">
+    <nav className="bg-gray-800 text-white p-4 shadow-md sticky top-0">
       <div className="container mx-auto flex items-center justify-between">
         <Link
           to="/"

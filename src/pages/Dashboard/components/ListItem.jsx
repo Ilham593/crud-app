@@ -1,9 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
 import { deleteData } from "../../../store/slices/crudSlice";
+import UpdateData from "./Updatedata";
+import { useState } from "react";
 function ListItem() {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.crud);
 
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [itemToEdit, setItemToEdit] = useState(null);
+
+  const handleOpenUpdateModal = (item) => {
+    setItemToEdit(item);
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setItemToEdit(null);
+    setIsUpdateModalOpen(false);
+  };
   const handleDelete = (id) => {
     const result = window.confirm(
       "Apakah Anda yakin ingin menghapus item ini?"
@@ -43,12 +57,34 @@ function ListItem() {
                   >
                     Delete
                   </button>
+                  <button
+                    onClick={() => handleOpenUpdateModal(item)}
+                    className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors duration-300" // Warna biru untuk Update
+                  >
+                    Update
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+      {isUpdateModalOpen && itemToEdit && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="relative bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto w-full max-w-lg">
+            <button
+              onClick={handleCloseUpdateModal}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold focus:outline-none"
+            >
+              &times;
+            </button>
+            <UpdateData
+              itemToEdit={itemToEdit}
+              onClose={handleCloseUpdateModal}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
