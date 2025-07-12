@@ -34,8 +34,12 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       localStorage.removeItem("user");
     },
+    updateProfile: (state, action) => {
+      state.user.fullname = action.payload.fullname;
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateProfile } = authSlice.actions;
 export default authSlice.reducer;
