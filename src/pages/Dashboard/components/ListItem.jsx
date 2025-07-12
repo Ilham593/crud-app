@@ -1,7 +1,18 @@
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { deleteData } from "../../../store/slices/crudSlice";
 function ListItem() {
+  const dispatch = useDispatch();
   const { data } = useSelector((state) => state.crud);
+
+  const handleDelete = (id) => {
+    const result = window.confirm(
+      "Apakah Anda yakin ingin menghapus item ini?"
+    );
+    if (result) {
+      dispatch(deleteData(id));
+    }
+    return;
+  };
 
   return (
     <div className="flex justify-center p-4">
@@ -25,7 +36,14 @@ function ListItem() {
                   <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
                   <p className="text-sm text-gray-600">{item.description}</p>
                 </div>
-                <div className="flex justify-end space-x-2 mt-auto pt-3 border-t border-gray-200"></div>
+                <div className="flex justify-end space-x-2 mt-auto pt-3 border-t border-gray-200">
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="bg-red-600 text-white px-3 py-1 rounded-md text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 transition-colors duration-300"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             ))}
           </div>

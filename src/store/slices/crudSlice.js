@@ -24,8 +24,12 @@ const crudSlice = createSlice({
       state.data.push(action.payload);
       localStorage.setItem("data", JSON.stringify(state.data));
     },
+    deleteData: (state, action) => {
+      state.data = state.data.filter((item) => item.id !== action.payload);
+      localStorage.setItem("data", JSON.stringify(state.data));
+    }
   },
 });
 
-export const { addData } = crudSlice.actions;
+export const { addData , deleteData } = crudSlice.actions;
 export default crudSlice.reducer;
