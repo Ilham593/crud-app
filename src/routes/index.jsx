@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import ProtectedRoute from "../components/ProtectedRoutes";
 
 export const router = createBrowserRouter([
+  
   {
     path: "/login",
     element: <LoginPage />,
