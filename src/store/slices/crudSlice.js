@@ -6,6 +6,7 @@ const getInitialState = () => {
     if (data) {
       return {
         data: data,
+        searchTerm: "",
       };
     }
   } catch (error) {
@@ -13,6 +14,7 @@ const getInitialState = () => {
   }
   return {
     data: [],
+    searchTerm: "",
   };
 };
 
@@ -36,9 +38,12 @@ const crudSlice = createSlice({
         return item;
       });
       localStorage.setItem("data", JSON.stringify(state.data));
-    }
+    },
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
+    },
   },
 });
 
-export const { addData , deleteData, updateData } = crudSlice.actions;
+export const { addData , deleteData, updateData, setSearchTerm } = crudSlice.actions;
 export default crudSlice.reducer;
