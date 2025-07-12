@@ -2,9 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../store/slices/authSlice";
 import { useState, useEffect } from "react";
-// Import gambar. ASUMSIKAN kamu memiliki gambar di src/assets/images/login-illustration.jpg
-// GANTI 'login-illustration.jpg' dengan nama file gambar aslimu dan pastikan path-nya benar.
-import logo from '../../assets/logo.png';
+import logo from "../../assets/logo.png";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -42,18 +40,15 @@ function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-4 sm:p-6 lg:p-8">
-      {/* Container utama untuk form dan gambar, menggunakan flex untuk layout responsive */}
       <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-2xl overflow-hidden max-w-5xl w-full">
-        {/* Bagian Kiri: Gambar Ilustrasi Login */}
         <div className="md:w-1/2 flex items-center justify-center bg-gray-50 p-6 md:p-10">
           <img
             src={logo}
-            alt="Login Illustration"
+            alt="login logo"
             className="max-w-full h-auto object-contain rounded-lg"
           />
         </div>
 
-        {/* Bagian Kanan: Form Login */}
         <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
           <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-8">
             Selamat Datang!
