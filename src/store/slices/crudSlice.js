@@ -8,7 +8,7 @@ const getInitialState = () => {
         data: data,
         searchTerm: "",
         currentPage: 1,
-        itemsPerPage: 5,
+        itemsPerPage: 6,
       };
     }
   } catch (error) {
