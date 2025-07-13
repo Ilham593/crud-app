@@ -1,20 +1,17 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import AddItem from "./components/AddItem";
 import ListItem from "./components/ListItem";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchTerm } from "../../store/slices/crudSlice";
 
 function Dashboard() {
-  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { searchTerm } = useSelector((state) => state.crud); 
+  const { searchTerm } = useSelector((state) => state.crud);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isUpdatingUrlFromRedux = useRef(false);
-  const lastSearchTermInUrl = useRef("");
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -27,41 +24,10 @@ function Dashboard() {
     const searchParams = new URLSearchParams(location.search);
     const urlSearchTerm = searchParams.get("search") || "";
 
-    if (isUpdatingUrlFromRedux.current) {
-      isUpdatingUrlFromRedux.current = false;
-      return;
-    }
-
     if (urlSearchTerm !== searchTerm) {
       dispatch(setSearchTerm(urlSearchTerm));
     }
   }, [location.search, searchTerm, dispatch]);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const currentSearchTerm = searchParams.get("search") || "";
-
-    if (
-      searchTerm.trim() === currentSearchTerm &&
-      lastSearchTermInUrl.current === currentSearchTerm
-    ) {
-      return;
-    }
-
-    const newParams = new URLSearchParams(location.search);
-
-    if (searchTerm && searchTerm.trim() !== "") {
-      newParams.set("search", searchTerm.trim());
-    } else {
-      newParams.delete("search");
-    }
-
-    const newQueryString = newParams.toString();
-
-    lastSearchTermInUrl.current = searchTerm.trim();
-    isUpdatingUrlFromRedux.current = true;
-    navigate(`?${newQueryString}`, { replace: true });
-  }, [searchTerm, navigate]);
 
   return (
     <div className="min-h-screen p-4 sm:p-6 lg:p-8">

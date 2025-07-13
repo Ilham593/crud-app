@@ -1,35 +1,38 @@
-import { useSelector, useDispatch } from "react-redux";
-import { setSearchTerm } from "../../../store/slices/crudSlice";
+import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Search() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const reduxSearchTerm = useSelector((state) => state.crud.searchTerm);
 
   const [inputValue, setInputValue] = useState(reduxSearchTerm);
-  const [isTyping, setIsTyping] = useState(false);
   const typingTimeoutRef = useRef(null);
-  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (!isTyping) {
-      setInputValue(reduxSearchTerm);
-    }
-  }, [reduxSearchTerm, isTyping]);
+    setInputValue(reduxSearchTerm);
+  }, [reduxSearchTerm]);
 
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-    setIsTyping(true);
+    const newSearchTerm = e.target.value;
+    setInputValue(newSearchTerm);
 
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
     }
 
     typingTimeoutRef.current = setTimeout(() => {
-      setIsTyping(false);
-      if (e.target.value !== reduxSearchTerm) {
-        dispatch(setSearchTerm(e.target.value));
+      const searchParams = new URLSearchParams(location.search);
+
+      if (newSearchTerm.trim()) {
+        searchParams.set("search", newSearchTerm.trim());
+      } else {
+        searchParams.delete("search");
       }
+
+      navigate(`?${searchParams.toString()}`, { replace: true });
     }, 500);
   };
 
@@ -44,7 +47,6 @@ function Search() {
   return (
     <form onSubmit={(e) => e.preventDefault()} className="mb-6">
       <input
-        ref={inputRef}
         type="text"
         value={inputValue}
         onChange={handleInputChange}
