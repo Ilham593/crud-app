@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../store/slices/authSlice";
 import { useState, useEffect } from "react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.svg";
 
 function LoginPage() {
   const navigate = useNavigate();
