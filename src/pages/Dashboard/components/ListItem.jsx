@@ -116,7 +116,9 @@ function ListItem() {
                       {item.title}
                     </h3>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
-                      {item.description}
+                      {item.description.length > 100
+                        ? item.description.slice(0, 100) + "..."
+                        : item.description}
                     </p>
                   </div>
                   <div className="flex justify-end space-x-2 mt-auto pt-3 border-t border-gray-200 dark:border-gray-700">
