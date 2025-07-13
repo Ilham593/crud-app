@@ -36,7 +36,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-4xl font-extrabold text-gray-800">Dashboard</h1>
