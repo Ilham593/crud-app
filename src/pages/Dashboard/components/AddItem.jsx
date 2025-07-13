@@ -8,11 +8,23 @@ function AddItem({ onClose }) {
   const [form, setForm] = useState({
     title: "",
     description: "",
+    image: "",
   });
 
   const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setError("");
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setForm({ ...form, image: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -27,6 +39,7 @@ function AddItem({ onClose }) {
       id: Date.now(),
       title: form.title,
       description: form.description,
+      image: form.image,
     };
 
     dispatch(addData(newItem));
@@ -58,6 +71,7 @@ function AddItem({ onClose }) {
           >
             Judul Postingan
           </label>
+
           <input
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-slate-800 dark:text-slate-200 transition duration-300 ease-in-out"
             id="title"
@@ -67,6 +81,22 @@ function AddItem({ onClose }) {
             onChange={handleInputChange}
             name="title"
             required
+          />
+        </div>
+        <div>
+          <label
+            className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2"
+            htmlFor="image"
+          >
+            Gambar (Opsional)
+          </label>
+          <input
+            className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900 file:text-blue-700 dark:file:text-blue-300 hover:file:bg-blue-100"
+            id="image"
+            type="file"
+            name="image"
+            onChange={handleImageChange}
+            accept="image/*"
           />
         </div>
         <div>

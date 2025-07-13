@@ -95,6 +95,13 @@ function ListItem() {
                   key={item.id}
                   className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col justify-between space-y-3"
                 >
+                  {item.image && (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-48 object-cover"
+                    />
+                  )}
                   <div>
                     <h3 className="text-lg font-semibold mb-1 text-slate-800 dark:text-slate-200">
                       {item.title}
