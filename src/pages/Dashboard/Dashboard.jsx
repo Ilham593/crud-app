@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { FaPlus, FaNewspaper } from "react-icons/fa";
-import AddItem from "./components/AddItem";
-import ListItem from "./components/ListItem";
+import { FaPlus, FaNewspaper, FaBookOpen } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchAndPage } from "../../store/slices/crudSlice";
-
+import AddItem from "./components/AddItem";
+import ListItem from "./components/ListItem";
 function Dashboard() {
   const location = useLocation();
   const dispatch = useDispatch();

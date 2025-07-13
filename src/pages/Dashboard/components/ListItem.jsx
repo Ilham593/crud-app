@@ -88,8 +88,8 @@ function ListItem() {
   };
 
   return (
-    <div className="flex justify-center p-4">
-      <div className="p-8 bg-white dark:bg-slate-800 rounded-xl shadow-lg w-full border border-transparent dark:border-gray-700">
+    <div className="flex justify-center">
+      <div className="p-2 bg-white dark:bg-slate-800 rounded-xl shadow-lg w-full border border-transparent dark:border-gray-700">
         <h2 className="text-3xl font-extrabold text-slate-800 dark:text-slate-200 text-center mb-6">
           Daftar Item
         </h2>
@@ -102,44 +102,56 @@ function ListItem() {
               {currentItems.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col justify-between space-y-3"
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col"
                 >
-                  {item.image && (
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-48 object-cover"
-                    />
-                  )}
-                  <div>
-                    <h3 className="text-lg font-semibold mb-1 text-slate-800 dark:text-slate-200">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                      {item.description.length > 100
-                        ? item.description.slice(0, 100) + "..."
-                        : item.description}
-                    </p>
+                  <div className="w-full h-48 bg-slate-200 dark:bg-slate-700">
+                    {item.image && (
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
-                  <div className="flex justify-end space-x-2 mt-auto pt-3 border-t border-gray-200 dark:border-gray-700">
-                    <button
-                      onClick={() => handleOpenDetailModal(item)}
-                      className="text-sm text-blue-500 hover:underline"
-                    >
-                      Lihat Detail
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded-md text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 transition-colors duration-300"
-                    >
-                      Delete
-                    </button>
-                    <button
-                      onClick={() => handleOpenUpdateModal(item)}
-                      className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors duration-300"
-                    >
-                      Update
-                    </button>
+
+                  <div className="p-4 flex flex-col flex-grow">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-1 text-slate-800 dark:text-slate-200 h-14 line-clamp-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 h-10 line-clamp-2">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-200 dark:border-gray-700">
+                      <button
+                        onClick={() => handleOpenDetailModal(item)}
+                        className="text-sm text-blue-500 hover:underline"
+                      >
+                        Lihat Detail
+                      </button>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(item.id);
+                          }}
+                          className="bg-red-600 text-white px-3 py-1 rounded-md text-sm hover:bg-red-700..."
+                        >
+                          Delete
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenUpdateModal(item);
+                          }}
+                          className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700..."
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}

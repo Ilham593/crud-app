@@ -40,7 +40,7 @@ function MainLayout() {
   return (
     <div className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen transition-colors duration-300">
       <Navbar />
-      <main className="container mx-auto p-4 ">
+      <main className="container mx-auto">
         <Outlet />
       </main>
     </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { logout } from "../../store/slices/authSlice";
 import { setTheme } from "../../store/slices/themeSlice";
-import { FaChevronDown, FaSun, FaMoon, FaDesktop } from "react-icons/fa";
+import { FaChevronDown, FaSun, FaMoon, FaDesktop, FaPencilAlt } from "react-icons/fa";
 
 function Navbar() {
   const { user } = useSelector((state) => state.auth);
@@ -52,7 +52,7 @@ function Navbar() {
           to="/"
           className="text-2xl font-bold text-slate-800 dark:text-slate-200 hover:text-blue-400 dark:hover:text-blue-400 transition-colors duration-300"
         >
-          CRUD APP
+          <FaPencilAlt />
         </Link>
         <div className="flex items-center space-x-4">
           <Link
