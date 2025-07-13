@@ -18,7 +18,6 @@ function Navbar() {
   };
 
   const handleThemeChange = (newTheme) => {
-    console.log("1. Tombol Tema Ditekan:", newTheme);
     dispatch(setTheme(newTheme));
   };
 
@@ -47,32 +46,31 @@ function Navbar() {
   ];
 
   return (
-    <nav className="bg-gray-800 text-white p-4 shadow-md sticky top-0 z-20">
+    <nav className="bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200 p-4 shadow-md sticky top-0 z-20">
       <div className="container mx-auto flex items-center justify-between">
         <Link
           to="/"
-          className="text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300"
+          className="text-2xl font-bold text-slate-800 dark:text-slate-200 hover:text-blue-400 dark:hover:text-blue-400 transition-colors duration-300"
         >
           CRUD APP
         </Link>
         <div className="flex items-center space-x-4">
           <Link
             to="/"
-            className="text-white hover:text-blue-400 transition-colors duration-300 text-lg font-medium"
+            className="text-slate-800 dark:text-slate-200 hover:text-blue-400 dark:hover:text-blue-400 transition-colors duration-300 text-lg font-medium"
           >
             Home
           </Link>
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={toggleDropdown}
-              className="flex items-center space-x-2 text-white hover:text-blue-400 focus:outline-none transition-colors duration-300 p-2 rounded-md hover:bg-gray-700"
+              className="flex items-center space-x-2 text-slate-800 dark:text-slate-200 hover:text-blue-400 dark:hover:text-blue-400 focus:outline-none transition-colors duration-300 p-2 rounded-md"
               aria-haspopup="true"
               aria-expanded={isDropdownOpen}
             >
               <span className="font-semibold text-lg">
                 {user ? user.fullname : "Pengguna"}
               </span>
-
               <FaChevronDown
                 className={`w-4 h-4 transform transition-transform duration-300 ${
                   isDropdownOpen ? "rotate-180" : "rotate-0"
@@ -97,7 +95,6 @@ function Navbar() {
                 >
                   Edit Profil
                 </Link>
-
                 <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
                 <div className="px-4 pt-2 pb-1 text-xs text-gray-500 dark:text-gray-400">
                   Pilih Tema
@@ -122,7 +119,6 @@ function Navbar() {
                   ))}
                 </div>
                 <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
-
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"

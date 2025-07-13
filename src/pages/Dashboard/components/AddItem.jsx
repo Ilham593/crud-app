@@ -44,24 +44,22 @@ function AddItem({ onClose }) {
 
   return (
     <div className="flex justify-center p-4">
-      {" "}
       <form
         onSubmit={handleSubmit}
-        className="p-8 bg-white rounded-xl shadow-lg space-y-6 w-full max-w-lg"
+        className="p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg space-y-6 w-full max-w-lg"
       >
-        {" "}
-        <h3 className="text-3xl font-extrabold text-gray-800 text-center mb-6">
+        <h3 className="text-3xl font-extrabold text-slate-800 dark:text-slate-200 text-center mb-6">
           Tambah Item Baru
-        </h3>{" "}
+        </h3>
         <div>
           <label
-            className="block text-gray-700 text-sm font-semibold mb-2"
+            className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2"
             htmlFor="title"
           >
             Title
           </label>
           <input
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800 transition duration-300 ease-in-out"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-slate-800 dark:text-slate-200 transition duration-300 ease-in-out"
             id="title"
             type="text"
             placeholder="Enter title"
@@ -73,13 +71,13 @@ function AddItem({ onClose }) {
         </div>
         <div>
           <label
-            className="block text-gray-700 text-sm font-semibold mb-2"
+            className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2"
             htmlFor="description"
           >
             Description
           </label>
           <input
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800 transition duration-300 ease-in-out"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-slate-800 dark:text-slate-200 transition duration-300 ease-in-out"
             id="description"
             type="text"
             placeholder="Enter description"

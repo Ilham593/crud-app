@@ -25,7 +25,6 @@ function Search() {
 
     typingTimeoutRef.current = setTimeout(() => {
       const searchParams = new URLSearchParams(location.search);
-
       searchParams.set("page", "1");
 
       if (newSearchTerm.trim()) {
@@ -52,7 +51,7 @@ function Search() {
         type="text"
         value={inputValue}
         onChange={handleInputChange}
-        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800 transition duration-300 ease-in-out text-lg"
+        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-slate-800 dark:text-slate-200 dark:placeholder-gray-400 transition duration-300 ease-in-out text-lg"
         placeholder="Cari item berdasarkan judul atau deskripsi..."
         aria-label="Search items"
       />

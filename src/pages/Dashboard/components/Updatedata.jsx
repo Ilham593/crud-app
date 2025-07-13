@@ -49,21 +49,20 @@ function UpdateData({ itemToEdit, onClose }) {
   };
 
   return (
-    <div className="p-8 bg-white rounded-lg space-y-6">
-      {" "}
-      <h3 className="text-3xl font-extrabold text-gray-800 text-center mb-6">
+    <div className="p-8 bg-white dark:bg-gray-800 rounded-lg space-y-6">
+      <h3 className="text-3xl font-extrabold text-slate-800 dark:text-slate-200 text-center mb-6">
         Edit Item
       </h3>
       <form onSubmit={handleSubmit}>
         <div>
           <label
-            className="block text-gray-700 text-sm font-semibold mb-2"
+            className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2"
             htmlFor="update-title"
           >
             Title
           </label>
           <input
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800 transition duration-300 ease-in-out"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-slate-800 dark:text-slate-200 transition duration-300 ease-in-out"
             type="text"
             id="update-title"
             name="title"
@@ -75,13 +74,13 @@ function UpdateData({ itemToEdit, onClose }) {
         </div>
         <div>
           <label
-            className="block text-gray-700 text-sm font-semibold mb-2"
+            className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2"
             htmlFor="update-description"
           >
             Description
           </label>
           <input
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800 transition duration-300 ease-in-out"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-slate-800 dark:text-slate-200 transition duration-300 ease-in-out"
             type="text"
             id="update-description"
             name="description"

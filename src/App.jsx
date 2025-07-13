@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+
 function MainLayout() {
   const { theme } = useSelector((state) => state.theme);
 
@@ -14,6 +15,7 @@ function MainLayout() {
 
     if (isDark) {
       root.classList.add("dark");
+      return;
     }
 
     if (isSystem) {
@@ -36,7 +38,7 @@ function MainLayout() {
   }, [theme]);
 
   return (
-    <div className="bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen transition-colors duration-300">
       <Navbar />
       <main className="container mx-auto p-4 ">
         <Outlet />
