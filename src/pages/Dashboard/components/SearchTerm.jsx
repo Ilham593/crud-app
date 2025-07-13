@@ -26,6 +26,8 @@ function Search() {
     typingTimeoutRef.current = setTimeout(() => {
       const searchParams = new URLSearchParams(location.search);
 
+      searchParams.set("page", "1");
+
       if (newSearchTerm.trim()) {
         searchParams.set("search", newSearchTerm.trim());
       } else {
