@@ -34,7 +34,7 @@ const crudSlice = createSlice({
       state.data = state.data.filter((item) => item.id !== action.payload);
       localStorage.setItem("data", JSON.stringify(state.data));
     },
-    updateData:(state, action) => {
+    updateData: (state, action) => {
       state.data = state.data.map((item) => {
         if (item.id === action.payload.id) {
           return action.payload;
@@ -43,14 +43,17 @@ const crudSlice = createSlice({
       });
       localStorage.setItem("data", JSON.stringify(state.data));
     },
-    setSearchTerm: (state, action) => {
-      state.searchTerm = action.payload;
-    },
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload;
+    setSearchAndPage: (state, action) => {
+      state.searchTerm = action.payload.searchTerm;
+      state.currentPage = action.payload.currentPage;
     },
   },
 });
 
-export const { addData , deleteData, updateData, setSearchTerm, setCurrentPage } = crudSlice.actions;
+export const {
+  addData,
+  deleteData,
+  updateData,
+  setSearchAndPage,
+} = crudSlice.actions;
 export default crudSlice.reducer;

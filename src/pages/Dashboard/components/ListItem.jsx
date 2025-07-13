@@ -1,19 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
 import { deleteData } from "../../../store/slices/crudSlice";
 import UpdateData from "./Updatedata";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Search from "./SearchTerm";
-function ListItem({ onPaginationInfoChange }) {
+import { useNavigate } from "react-router-dom";
+
+function ListItem() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { data, searchTerm, currentPage, itemsPerPage } = useSelector(
     (state) => state.crud
   );
 
-  const filteredData = data.filter((item) => {
-    if (!searchTerm.trim()) {
-      return true;
-    }
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [itemToEdit, setItemToEdit] = useState(null);
 
+  const filteredData = data.filter((item) => {
+    if (!searchTerm.trim()) return true;
     const searchTermLower = searchTerm.toLowerCase();
     return (
       item.title.toLowerCase().includes(searchTermLower) ||
@@ -21,25 +25,27 @@ function ListItem({ onPaginationInfoChange }) {
     );
   });
 
-  const totalFilteredItems = filteredData.length;
-  const totalPages = Math.ceil(totalFilteredItems / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedData = filteredData.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [itemToEdit, setItemToEdit] = useState(null);
+  const handlePageChange = (pageNumber) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set("page", pageNumber);
+    navigate(`?${searchParams.toString()}`, { replace: true });
+  };
 
   const handleOpenUpdateModal = (item) => {
     setItemToEdit(item);
     setIsUpdateModalOpen(true);
   };
-
   const handleCloseUpdateModal = () => {
     setItemToEdit(null);
     setIsUpdateModalOpen(false);
   };
+
   const handleDelete = (id) => {
     const result = window.confirm(
       "Apakah Anda yakin ingin menghapus item ini?"
@@ -47,18 +53,30 @@ function ListItem({ onPaginationInfoChange }) {
     if (result) {
       dispatch(deleteData(id));
     }
-    return;
   };
+  const Pagination = () => {
+    if (totalPages <= 1) return null;
 
-  useEffect(() => {
-    if (onPaginationInfoChange) {
-      onPaginationInfoChange({
-        totalItems: totalFilteredItems,
-        totalPages: totalPages,
-        currentPage: currentPage,
-      });
-    }
-  }, [totalFilteredItems, totalPages, currentPage, onPaginationInfoChange]);
+    const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    return (
+      <div className="flex justify-center items-center space-x-2 mt-8">
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            onClick={() => handlePageChange(number)}
+            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors duration-300 ${
+              currentPage === number
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
+          >
+            {number}
+          </button>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="flex justify-center p-4">
@@ -69,44 +87,48 @@ function ListItem({ onPaginationInfoChange }) {
 
         <Search />
 
-        {paginatedData.length === 0 && !searchTerm ? (
-          <p className="text-center text-gray-600 text-lg">
-            Belum ada item ditambahkan.
-          </p>
-        ) : paginatedData.length === 0 && searchTerm ? (
+        {currentItems.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {currentItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col justify-between space-y-3"
+                >
+                  <div className="text-gray-800">
+                    <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
+                    <p className="text-sm text-gray-600">{item.description}</p>
+                  </div>
+                  <div className="flex justify-end space-x-2 mt-auto pt-3 border-t border-gray-200">
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className="bg-red-600 text-white px-3 py-1 rounded-md text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 transition-colors duration-300"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={() => handleOpenUpdateModal(item)}
+                      className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors duration-300"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Pagination />
+          </>
+        ) : searchTerm ? (
           <p className="text-center text-gray-600 text-lg">
             Tidak ada item yang cocok dengan pencarian "{searchTerm}".
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {paginatedData.map((item) => (
-              <div
-                key={item.id}
-                className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col justify-between space-y-3"
-              >
-                <div className="text-gray-800">
-                  <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
-                  <p className="text-sm text-gray-600">{item.description}</p>
-                </div>
-                <div className="flex justify-end space-x-2 mt-auto pt-3 border-t border-gray-200">
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded-md text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 transition-colors duration-300"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    onClick={() => handleOpenUpdateModal(item)}
-                    className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors duration-300" // Warna biru untuk Update
-                  >
-                    Update
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+          <p className="text-center text-gray-600 text-lg">
+            Belum ada item ditambahkan.
+          </p>
         )}
       </div>
+
       {isUpdateModalOpen && itemToEdit && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
           <div className="relative bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto w-full max-w-lg">
