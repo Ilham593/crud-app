@@ -1,11 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { deleteData } from "../../../store/slices/crudSlice";
 import UpdateData from "./Updatedata";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "./SearchTerm";
-function ListItem() {
+function ListItem({ onPaginationInfoChange }) {
   const dispatch = useDispatch();
-  const { data, searchTerm } = useSelector((state) => state.crud);
+  const { data, searchTerm, currentPage, itemsPerPage } = useSelector(
+    (state) => state.crud
+  );
 
   const filteredData = data.filter((item) => {
     if (!searchTerm.trim()) {
@@ -18,6 +20,13 @@ function ListItem() {
       item.description.toLowerCase().includes(searchTermLower)
     );
   });
+
+  const totalFilteredItems = filteredData.length;
+  const totalPages = Math.ceil(totalFilteredItems / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedData = filteredData.slice(startIndex, endIndex);
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(null);
@@ -41,6 +50,16 @@ function ListItem() {
     return;
   };
 
+  useEffect(() => {
+    if (onPaginationInfoChange) {
+      onPaginationInfoChange({
+        totalItems: totalFilteredItems,
+        totalPages: totalPages,
+        currentPage: currentPage,
+      });
+    }
+  }, [totalFilteredItems, totalPages, currentPage, onPaginationInfoChange]);
+
   return (
     <div className="flex justify-center p-4">
       <div className="p-8 bg-white rounded-xl shadow-lg w-full">
@@ -50,17 +69,17 @@ function ListItem() {
 
         <Search />
 
-        {filteredData.length === 0 && !searchTerm ? (
+        {paginatedData.length === 0 && !searchTerm ? (
           <p className="text-center text-gray-600 text-lg">
             Belum ada item ditambahkan.
           </p>
-        ) : filteredData.length === 0 && searchTerm ? (
+        ) : paginatedData.length === 0 && searchTerm ? (
           <p className="text-center text-gray-600 text-lg">
             Tidak ada item yang cocok dengan pencarian "{searchTerm}".
           </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredData.map((item) => (
+            {paginatedData.map((item) => (
               <div
                 key={item.id}
                 className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col justify-between space-y-3"

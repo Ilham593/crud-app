@@ -7,6 +7,8 @@ const getInitialState = () => {
       return {
         data: data,
         searchTerm: "",
+        currentPage: 1,
+        itemsPerPage: 5,
       };
     }
   } catch (error) {
@@ -15,6 +17,8 @@ const getInitialState = () => {
   return {
     data: [],
     searchTerm: "",
+    currentPage: 1,
+    itemsPerPage: 10,
   };
 };
 
@@ -42,8 +46,11 @@ const crudSlice = createSlice({
     setSearchTerm: (state, action) => {
       state.searchTerm = action.payload;
     },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
   },
 });
 
-export const { addData , deleteData, updateData, setSearchTerm } = crudSlice.actions;
+export const { addData , deleteData, updateData, setSearchTerm, setCurrentPage } = crudSlice.actions;
 export default crudSlice.reducer;
