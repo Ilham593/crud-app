@@ -49,20 +49,20 @@ function AddItem({ onClose }) {
         className="p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg space-y-6 w-full max-w-lg"
       >
         <h3 className="text-3xl font-extrabold text-slate-800 dark:text-slate-200 text-center mb-6">
-          Tambah Item Baru
+          Buat Postingan Baru
         </h3>
         <div>
           <label
             className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2"
             htmlFor="title"
           >
-            Title
+            Judul Postingan
           </label>
           <input
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-slate-800 dark:text-slate-200 transition duration-300 ease-in-out"
             id="title"
             type="text"
-            placeholder="Enter title"
+            placeholder="Tulis judul blog Anda di sini..."
             value={form.title}
             onChange={handleInputChange}
             name="title"
@@ -76,16 +76,16 @@ function AddItem({ onClose }) {
           >
             Description
           </label>
-          <input
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-slate-800 dark:text-slate-200 transition duration-300 ease-in-out"
+          <textarea
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg ... "
             id="description"
-            type="text"
-            placeholder="Enter description"
+            rows="5"
+            placeholder="Tulis konten blog Anda di sini..."
             value={form.description}
             onChange={handleInputChange}
             name="description"
             required
-          />
+          ></textarea>
         </div>
         {error && (
           <p className="text-red-600 text-sm font-medium text-center">
@@ -96,7 +96,7 @@ function AddItem({ onClose }) {
           className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300 ease-in-out transform hover:scale-105"
           type="submit"
         >
-          Add Item
+          Simpan
         </button>
       </form>
     </div>
